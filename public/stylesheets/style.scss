@@ -1,14 +1,5 @@
+@import './scss/animations';
+@import './scss/reset';
+@import './scss/helpers';
+@import './scss/hero';
 @import './scss/social';
-
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.toast-message {
-  font-size: 2vh;
-  letter-spacing: .3px;
-}

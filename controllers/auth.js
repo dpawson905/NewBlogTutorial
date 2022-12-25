@@ -12,9 +12,8 @@ exports.googleRegisterOrLogin = async (req, res, next) => {
   try {
     await changeUserStatus(req, true);
     req.toastr.success(
-      `${`Hello ${req.user.firstName}`}`,
-      (title = "Login Success"),
-      (options = {})
+      `${`Welcome back ${req.user.firstName}!`}`,
+      (title = "Login Success")
     );
     const redirectUrl = req.session.returnTo || "/";
     delete req.session.returnTo;
@@ -30,8 +29,7 @@ exports.logout = async (req, res) => {
   req.logout(() => {
     req.toastr.success(
       "See you next time!",
-      (title = "Logout Success"),
-      (options = {})
+      (title = "Logout Success")
     );
     res.redirect("/");
   });

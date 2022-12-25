@@ -36,6 +36,9 @@ const UserSchema = new Schema(
       trim: true,
       unique: true,
     },
+    image: {
+      type: String
+    },
     online: {
       type: Boolean,
       default: false

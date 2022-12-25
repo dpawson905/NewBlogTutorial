@@ -30,5 +30,6 @@ exports.fontSrcUrls = () => {
 exports.imgSrcUrls = () => {
   return [
     "https://res.cloudinary.com/",
+    "https://lh3.googleusercontent.com"
   ];
 };

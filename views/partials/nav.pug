@@ -1,6 +1,10 @@
-nav.navbar.navbar-expand-lg.bg-dark.sticky-top(data-bs-theme="dark")
+nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
   .container-fluid
-    a.navbar-brand(href='#') Navbar
+    a.navbar-brand(href='/')
+      if currentUser 
+        img.nav-image(src=`${currentUser.image}`, alt=`${currentUser.image} profile image`) 
+      else
+        i.fa-solid.fa-blog.fa-2x.color-primary
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#blogNav' aria-controls='blogNav' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #blogNav.collapse.navbar-collapse

@@ -1,4 +1,5 @@
 const debug = require("debug")("blog:passport");
+const slugify = require('slugify');
 
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
@@ -21,8 +22,10 @@ exports.passportInit = (app) => {
           {
             googleId: profile.id,
             email: profile._json.email,
+            image: profile._json.picture,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
+            userSlug: slugify(`${profile.name.givenName} ${profile.name.familyName}`)
           },
           (err, user) => {
             return cb(err, user);
