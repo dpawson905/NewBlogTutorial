@@ -128,6 +128,8 @@ app.use(
     showMethod: "slideDown",
     hideMethod: "slideUp",
     positionClass: "toast-bottom-full-width",
+    timeOut: '4000',
+    extendedTimeOut: '0'
   })
 );
 
