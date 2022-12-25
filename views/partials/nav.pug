@@ -1,0 +1,20 @@
+nav.navbar.navbar-expand-lg.bg-dark.sticky-top(data-bs-theme="dark")
+  .container-fluid
+    a.navbar-brand(href='#') Navbar
+    button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#blogNav' aria-controls='blogNav' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #blogNav.collapse.navbar-collapse
+      ul.navbar-nav.me-auto.mb-2.mb-lg-0
+        li.nav-item
+          a.nav-link.active(aria-current='page' href='#') Home
+        li.nav-item
+          a.nav-link(href='#') Link
+      ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+        if (currentUser)
+          form.d-sm-block(action="/auth/logout", method="post")
+            button.btn.btn-outline-success(type='submit') Logout
+        else
+          li.nav-item
+            a.btn.btn-social.btn-google(href='/auth/google')
+              span.fab.fa-google.mb-2 
+              | Sign In or Register With Google
