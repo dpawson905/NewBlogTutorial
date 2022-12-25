@@ -11,12 +11,15 @@ nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
       ul.navbar-nav.me-auto.mb-2.mb-lg-0
         li.nav-item
           a.nav-link.active(aria-current='page' href='#') Home
-        li.nav-item
-          a.nav-link(href='#') Link
+        if currentUser
+          li.nav-item
+            a.nav-link(href='#') New Blog
+          li.nav-item
+            a.nav-link(href='#') Profile
       ul.navbar-nav.ms-auto.mb-2.mb-lg-0
         if (currentUser)
           form.d-sm-block(action="/auth/logout", method="post")
-            button.btn.btn-outline-success(type='submit') Logout
+            button.btn.btn-outline-success(type='submit') Logout #{currentUser.firstName}
         else
           li.nav-item
             a.btn.btn-social.btn-google(href='/auth/google')
