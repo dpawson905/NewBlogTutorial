@@ -14,3 +14,23 @@
   max-width: 3rem;
   border-radius: 50%;
 }
+
+.no-arrow::after {
+  content: none;
+}
+
+.notification-box {
+  width: 325px;
+}
+
+.notification-alert {
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  left: 60%;
+  top: 20% !important;
+
+  &:empty {
+    display: block !important;
+  }
+}

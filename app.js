@@ -22,8 +22,10 @@ const cookieParser = require("cookie-parser");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const slugify = require("slugify");
+const randomstring = require("randomstring");
 
 const User = require("./models/user");
+const Notification = require("./models/notification");
 
 const {
   scriptSrcUrls,
@@ -33,10 +35,11 @@ const {
   imgSrcUrls,
 } = require("./utils/helmetHelper");
 
-// const seed = require('./seed');
+// const seed = require("./seed");
 // seed
 //   .seedSubscribers()
 //   .then(() => seed.seedBlog())
+//   .then(() => seed.seedNotifications());
 
 const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);
@@ -59,7 +62,10 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const { request } = require("express");
+const { countBy } = require("lodash");
 const io = new Server(server);
+io.sockets.setMaxListeners(40);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -159,6 +165,7 @@ passport.use(
     },
     async (req, accessToken, refreshToken, profile, cb) => {
       await User.findOrCreate(
+        { googleId: profile.id },
         {
           googleId: profile.id,
           email: profile._json.email,
@@ -166,7 +173,12 @@ passport.use(
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
           userSlug: slugify(
-            `${profile.name.givenName} ${profile.name.familyName}`
+            `${profile.name.givenName} ${
+              profile.name.familyName
+            } ${randomstring.generate({
+              length: 5,
+              charset: "numeric",
+            })}`
           ),
         },
         (err, user) => {
@@ -210,9 +222,20 @@ io.emitToUser = (_id, event, ...args) =>
     .filterSocketsByUser((user) => user._id.equals(_id))
     .forEach((socket) => socket.emit(event, ...args));
 
-app.use((req, res, next) => {
+io.on("connection", (socket) => {
+  console.log("User Connected");
+  // socket.on("whoami", (cb) => {
+  //   cb(socket.request.user ? socket.request.user.username : "");
+  // });
+  const session = socket.request.session;
+  session.socketId = socket.id;
+  session.save();
+});
+
+app.use(async (req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.toasts = req.toastr.render();
+  res.locals.notifications = await Notification.find({ _userId: req.user });
   next();
 });
 
@@ -239,16 +262,7 @@ async function run() {
   try {
     const changeStream = User.watch();
     changeStream.on("change", async (data) => {
-      io.on("connection", async (socket) => {
-        console.log(`new connection ${socket.id}`);
-        socket.on("whoami", (cb) => {
-          cb(socket.request.user ? socket.request.user.username : "");
-        });
-
-        const session = socket.request.session;
-        console.log(`saving sid ${socket.id} in session ${session.id}`);
-        session.socketId = socket.id;
-        session.save();
+      io.once("connection", async (socket) => {
         switch (data.operationType) {
           case "update":
             if (data.updateDescription.updatedFields.online === true) {
@@ -265,6 +279,27 @@ async function run() {
     });
   } catch {
     changeStream.close();
+  }
+  try {
+    const changeStream2 = Notification.watch();
+    io.on("connection", (socket) => {
+      changeStream2.on("change", async (data) => {
+        switch (data.operationType) {
+          case "insert":
+            if (
+              socket.request.session.passport.user._id ==
+              data.fullDocument._userId
+            ) {
+              let Arr = []
+              Arr = [...Arr, data]
+              console.log(Arr.length)
+              io.to(socket.id).emit("notification", data.fullDocument.message);
+            }
+        }
+      });
+    });
+  } catch {
+    // changeStream2.close();
   }
 }
 run().catch(console.error);

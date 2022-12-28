@@ -4,6 +4,7 @@ const _ = require("lodash");
 const User = require("./models/user");
 const Blog = require("./models/blog");
 const Subscriber = require("./models/subscriber");
+const Notification = require("./models/notification");
 
 
 const gatherUserInfo = async function () {
@@ -45,7 +46,6 @@ exports.seedBlog = async function () {
   for (const i of new Array(50)) {
     let blogUserInfo = _.shuffle(userArray)[0];
     let subscriberInfo = _.shuffle(subs).slice(0, 5);
-    console.log(subscriberInfo);
     let author = blogUserInfo.id;
     let title = faker.lorem.words();
     let body = faker.lorem.paragraph();
@@ -64,3 +64,17 @@ exports.seedBlog = async function () {
   console.log("50 new blogs created");
 };
 
+exports.seedNotifications = async function () {
+  await Notification.deleteMany({});
+  let userArray = await gatherUserInfo();
+  for (const i of new Array(10)) {
+    let _userId = _.shuffle(userArray)[0];
+    let message = 'Darrell has subscribed to your blog'
+    let newNotification = await Notification.create({
+      _userId,
+      message
+    });
+    await newNotification.save();
+  }
+  console.log('10 Notifications Created');
+}

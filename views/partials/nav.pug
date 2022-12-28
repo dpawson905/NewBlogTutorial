@@ -1,21 +1,37 @@
-nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
+nav#nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
   .container-fluid
     a.navbar-brand(href='/')
       if currentUser 
-        img.nav-image(src=`${currentUser.image}`, alt=`${currentUser.image} profile image`) 
+        img.nav-image.img-fluid.shadow.border(src=`${currentUser.image}`, alt=`${currentUser.image} profile image`) 
       else
         i.fa-solid.fa-blog.fa-2x.color-primary
+    if currentUser 
+      .dropdown.me-auto
+        button#notificationDropdown.btn.btn-transparent.text-white.dropdown-toggle.no-arrow.me-3.position-relative(type='button' data-bs-toggle='dropdown' aria-expanded='false')
+          i.fa-regular.fa-bell
+          span.position-absolute.badge.rounded-pill.bg-danger.p-0.m-0#notificationCount(class=`${notifications.length ? 'notification-alert' : ''}`)
+        ul.dropdown-menu.notification-box#notification-box.p-0.m-0.overflow-hidden(aria-labelledby='notificationDropdown')
+          if notifications && notifications.length
+            each notification in notifications
+              li.d-flex.justify-content-between.align-items-center.border.p-1
+                p.fs-6.me-auto.p-0.m-0 #{notification.message}
+                form.d-inline.ms-auto(action="#" method='post') 
+                  button.btn.btn-outline-transparent.color-primary(type="submit") 
+                    i.fa-solid.fa-xmark.color-primary
+          else 
+            li.d-flex.justify-content-between.align-items-center
+              p.fs-6.me-auto No new notifications
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#blogNav' aria-controls='blogNav' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #blogNav.collapse.navbar-collapse
       ul.navbar-nav.me-auto.mb-2.mb-lg-0
         li.nav-item
           a.nav-link.active(aria-current='page' href='#') Home
-        //- if currentUser
-        //-   li.nav-item
-        //-     a.nav-link(href='#') New Blog
-        //-   li.nav-item
-        //-     a.nav-link(href='#') Profile
+        if currentUser
+          li.nav-item
+            a.nav-link(href='#') New Blog
+          li.nav-item
+            a.nav-link(href='#') Profile
       ul.navbar-nav.ms-auto.mb-2.mb-lg-0
         if (currentUser)
           form.d-sm-block(action="/auth/logout", method="post")
