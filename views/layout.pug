@@ -16,3 +16,7 @@ html(lang="en" data-bs-theme="dark")
       #{toasts}
     include partials/nav
     block content
+    script(src='/socket.io/socket.io.js')
+    script.
+      var socket = io('http://localhost:3000');
+    script(src='/js/socket.js')

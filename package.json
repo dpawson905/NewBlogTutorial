@@ -36,9 +36,12 @@
     "passport-google-oauth": "^2.0.0",
     "pug": "3.0.2",
     "slugify": "^1.6.5",
+    "socket.io": "^4.5.4",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3"
+    "@faker-js/faker": "^7.6.0",
+    "dotenv": "^16.0.3",
+    "lodash": "^4.17.21"
   }
 }

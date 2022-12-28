@@ -11,11 +11,11 @@ nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
       ul.navbar-nav.me-auto.mb-2.mb-lg-0
         li.nav-item
           a.nav-link.active(aria-current='page' href='#') Home
-        if currentUser
-          li.nav-item
-            a.nav-link(href='#') New Blog
-          li.nav-item
-            a.nav-link(href='#') Profile
+        //- if currentUser
+        //-   li.nav-item
+        //-     a.nav-link(href='#') New Blog
+        //-   li.nav-item
+        //-     a.nav-link(href='#') Profile
       ul.navbar-nav.ms-auto.mb-2.mb-lg-0
         if (currentUser)
           form.d-sm-block(action="/auth/logout", method="post")

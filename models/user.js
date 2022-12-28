@@ -9,7 +9,8 @@ const UserSchema = new Schema(
   {
     googleId: {
       type: String,
-      required:true
+      required:true,
+      unique: true
     },
     email: {
       type: String,
@@ -43,10 +44,11 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false
     },
-  },
-  opts
+  }
 );
 
 UserSchema.plugin(findOrCreate);
 
-module.exports = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
+
+module.exports = User;

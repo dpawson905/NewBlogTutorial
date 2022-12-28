@@ -3,10 +3,11 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const debug = require("debug")("blog:app.js");
+const socketDebug = require("debug")("blog:socket");
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const cookieParser = require("cookie-parser");
+const http = require("http");
 const logger = require("morgan");
 const sassMiddleware = require("node-sass-middleware");
 const session = require("express-session");
@@ -17,8 +18,12 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
 const MongoDBStore = require("connect-mongo");
+const cookieParser = require("cookie-parser");
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const slugify = require("slugify");
 
-const _passport = require("./utils/passportHelper");
+const User = require("./models/user");
 
 const {
   scriptSrcUrls,
@@ -27,6 +32,11 @@ const {
   fontSrcUrls,
   imgSrcUrls,
 } = require("./utils/helmetHelper");
+
+// const seed = require('./seed');
+// seed
+//   .seedSubscribers()
+//   .then(() => seed.seedBlog())
 
 const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);
@@ -47,6 +57,9 @@ const indexRouter = require("./routes/index");
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -61,7 +74,7 @@ app.use(
     replaceWith: "_",
   })
 );
-// app.use(cookieParser());
+app.use(cookieParser());
 app.use(
   sassMiddleware({
     src: path.join(__dirname, "public"),
@@ -128,12 +141,74 @@ app.use(
     showMethod: "slideDown",
     hideMethod: "slideUp",
     positionClass: "toast-bottom-full-width",
-    timeOut: '4000',
-    extendedTimeOut: '0'
+    timeOut: "4000",
+    extendedTimeOut: "0",
   })
 );
 
-_passport.passportInit(app);
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: `/auth/google/callback`,
+      passReqToCallback: true,
+    },
+    async (req, accessToken, refreshToken, profile, cb) => {
+      await User.findOrCreate(
+        {
+          googleId: profile.id,
+          email: profile._json.email,
+          image: profile._json.picture,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          userSlug: slugify(
+            `${profile.name.givenName} ${profile.name.familyName}`
+          ),
+        },
+        (err, user) => {
+          return cb(err, user);
+        }
+      );
+    }
+  )
+);
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next);
+
+io.use(wrap(session(sess)));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error("unauthorized"));
+  }
+});
+
+io.filterSocketsByUser = (filterFn) =>
+  Object.values(io.sockets.connected).filter(
+    (socket) => socket.handshake && filterFn(socket.conn.request.user)
+  );
+
+io.emitToUser = (_id, event, ...args) =>
+  io
+    .filterSocketsByUser((user) => user._id.equals(_id))
+    .forEach((socket) => socket.emit(event, ...args));
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -160,6 +235,40 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.listen(PORT, () => {
+async function run() {
+  try {
+    const changeStream = User.watch();
+    changeStream.on("change", async (data) => {
+      io.on("connection", async (socket) => {
+        console.log(`new connection ${socket.id}`);
+        socket.on("whoami", (cb) => {
+          cb(socket.request.user ? socket.request.user.username : "");
+        });
+
+        const session = socket.request.session;
+        console.log(`saving sid ${socket.id} in session ${session.id}`);
+        session.socketId = socket.id;
+        session.save();
+        switch (data.operationType) {
+          case "update":
+            if (data.updateDescription.updatedFields.online === true) {
+              let user = await User.findById(data.documentKey._id);
+              io.to(socket.id).emit("online", user);
+              changeStream.close();
+              break;
+            }
+        }
+        socket.on("disconnect", () => {
+          io.to(socket.id).emit("online", null);
+        });
+      });
+    });
+  } catch {
+    changeStream.close();
+  }
+}
+run().catch(console.error);
+
+server.listen(PORT, () => {
   debug(`Blog is running on port ${PORT}`);
 });

@@ -1,5 +1,4 @@
 const passport = require("passport");
-
 const User = require("../models/user");
 
 exports.loadGoogleLogin = async (req, res, next) => {
@@ -27,16 +26,11 @@ exports.googleRegisterOrLogin = async (req, res, next) => {
 exports.logout = async (req, res) => {
   await changeUserStatus(req, false);
   req.logout(() => {
-    req.toastr.success(
-      "See you next time!",
-      (title = "Logout Success")
-    );
+    req.toastr.success("See you next time!", (title = "Logout Success"));
     res.redirect("/");
   });
 };
 
 async function changeUserStatus(r, status) {
-  let user = await User.findById(r.user);
-  user.online = status;
-  await user.save();
+  await User.findByIdAndUpdate(r.user, {online: status});
 }
