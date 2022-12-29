@@ -15,6 +15,9 @@ ready(function () {
     document
       .getElementById("notificationCount")
       .classList.add("notification-alert");
+    if (document.querySelector('.empty-notification')) {
+      document.querySelector('.empty-notification').remove()
+    }
     document.getElementById('notification-box').insertAdjacentHTML('beforeend',
       `<li class="d-flex justify-content-between align-items-center border p-1">
           <p class="fs-6 me-auto p-0 m-0">${msg}</p>

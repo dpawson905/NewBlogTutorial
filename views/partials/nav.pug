@@ -15,11 +15,11 @@ nav#nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
             each notification in notifications
               li.d-flex.justify-content-between.align-items-center.border.p-1
                 p.fs-6.me-auto.p-0.m-0 #{notification.message}
-                form.d-inline.ms-auto(action="#" method='post') 
-                  button.btn.btn-outline-transparent.color-primary(type="submit") 
+                form.d-inline.ms-auto(action=`/notification/${notification.id}?_method=DELETE`, method="post") 
+                  button(type="submit").btn.btn-outline-transparent.color-primary.delete-button 
                     i.fa-solid.fa-xmark.color-primary
           else 
-            li.d-flex.justify-content-between.align-items-center
+            li.d-flex.justify-content-between.align-items-center.empty-notification
               p.fs-6.me-auto No new notifications
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#blogNav' aria-controls='blogNav' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
@@ -40,4 +40,4 @@ nav#nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
           li.nav-item
             a.btn.btn-social.btn-google(href='/auth/google')
               span.fab.fa-google.mb-2 
-              | Sign In or Register With Google
+              | Sign In or Register With Google 

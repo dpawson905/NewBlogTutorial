@@ -35,11 +35,11 @@ const {
   imgSrcUrls,
 } = require("./utils/helmetHelper");
 
-// const seed = require("./seed");
-// seed
-//   .seedSubscribers()
-//   .then(() => seed.seedBlog())
-//   .then(() => seed.seedNotifications());
+const seed = require("./seed");
+seed
+  .seedSubscribers()
+  .then(() => seed.seedBlog())
+  .then(() => seed.seedNotifications());
 
 const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);
@@ -56,14 +56,13 @@ db.once("open", () => {
 
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
+const notificationRouter = require("./routes/notification");
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const { request } = require("express");
-const { countBy } = require("lodash");
 const io = new Server(server);
 io.sockets.setMaxListeners(40);
 
@@ -241,6 +240,7 @@ app.use(async (req, res, next) => {
 
 app.use("/auth", authRouter);
 app.use("/", indexRouter);
+app.use("/notification", notificationRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -290,9 +290,6 @@ async function run() {
               socket.request.session.passport.user._id ==
               data.fullDocument._userId
             ) {
-              let Arr = []
-              Arr = [...Arr, data]
-              console.log(Arr.length)
               io.to(socket.id).emit("notification", data.fullDocument.message);
             }
         }
