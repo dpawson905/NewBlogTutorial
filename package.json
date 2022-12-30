@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "DEBUG=blog:* nodemon",
-    "dev-win": "set DEBUG=blog:* && nodemon"
+    "dev-win": "set DEBUG=blog:* && nodemon",
+    "watch-scss": "sass --no-source-map --watch public/stylesheets/style.scss public/stylesheets/style.css"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
@@ -36,6 +37,7 @@
     "passport-google-oauth": "^2.0.0",
     "pug": "3.0.2",
     "randomstring": "^1.2.3",
+    "sass": "^1.57.1",
     "slugify": "^1.6.5",
     "socket.io": "^4.5.4",
     "xss-clean": "^0.1.1"

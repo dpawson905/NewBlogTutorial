@@ -1,3 +1,211 @@
-@keyframes color-change{0%,100%{filter:hue-rotate(0deg) blur(0.1px)}50%{filter:hue-rotate(360deg) blur(0)}}@keyframes scaleUp{0%{transform:scale(1.1)}50%{transform:scale(1)}100%{transform:scale(1.1)}}*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}.toast-message{font-size:2vh;letter-spacing:.3px}.navbar-brand svg{color:steelblue}.nav-image{max-height:3rem;max-width:3rem;border-radius:50%}.no-arrow::after{content:none}.notification-box{width:325px}.notification-alert{height:8px;width:8px;position:absolute;left:60%;top:20% !important}.notification-alert:empty{display:block !important}.header{position:relative;overflow:hidden !important;height:100vh;max-height:100vh;width:100%;max-width:100%}.header__hero{height:100%;width:100%;background-image:linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url("/img/hero5.jpg");background-position:center center;background-size:cover;background-repeat:no-repeat;animation:scaleUp 4s ease-in-out forwards}.header__text{color:#fff;position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);letter-spacing:calc(.2rem + .2vw)}.btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:50%;bottom:0;width:32px;line-height:32px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2);transform:translate(0, -50%)}.btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding:0}.btn-social-icon>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}.btn-google{color:#fff;background-color:#4286f4ee;border-color:rgba(0,0,0,0.2);transition:all 0.3s ease-in}.btn-google:focus,.btn-google.focus{color:#fff;background-color:#4285f4;border-color:rgba(0,0,0,0.2)}.btn-google:hover{color:#fff;background-color:#4285f4;border-color:rgba(0,0,0,0.2)}.btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{color:#fff;background-color:#4285f4;border-color:rgba(0,0,0,0.2)}.btn-google:active:hover,.btn-google.active:hover,.open>.dropdown-toggle.btn-google:hover,.btn-google:active:focus,.btn-google.active:focus,.open>.dropdown-toggle.btn-google:focus,.btn-google:active.focus,.btn-google.active.focus,.open>.dropdown-toggle.btn-google.focus{color:#fff;background-color:#4286f4;border-color:rgba(0,0,0,0.2)}.btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{background-image:none}.btn-google.disabled:hover,.btn-google[disabled]:hover,fieldset[disabled] .btn-google:hover,.btn-google.disabled:focus,.btn-google[disabled]:focus,fieldset[disabled] .btn-google:focus,.btn-google.disabled.focus,.btn-google[disabled].focus,fieldset[disabled] .btn-google.focus{background-color:#4285f4;border-color:rgba(0,0,0,0.2)}.btn-google .badge{color:#4285f4;background-color:#fff}.blog-link{text-decoration:none;cursor:pointer}
+@keyframes color-change {
+  0%, 100% {
+    filter: hue-rotate(0deg) blur(0.1px);
+  }
+  50% {
+    filter: hue-rotate(360deg) blur(0);
+  }
+}
+@keyframes scaleUp {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/*# sourceMappingURL=style.css.map */
+.toast-message {
+  font-size: 2vh;
+  letter-spacing: 0.3px;
+}
+
+.navbar-brand svg {
+  color: steelblue;
+}
+
+.nav-image {
+  max-height: 3rem;
+  max-width: 3rem;
+  border-radius: 50%;
+}
+
+.no-arrow::after {
+  content: none;
+}
+
+.notification-box {
+  width: 325px;
+}
+
+.notification-alert {
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  left: 60%;
+  top: 20% !important;
+}
+.notification-alert:empty {
+  display: block !important;
+}
+
+.header {
+  position: relative;
+  overflow: hidden !important;
+  height: 100vh;
+  max-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+}
+.header__hero {
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/img/hero5.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: scaleUp 4s ease-in-out forwards;
+}
+.header__text {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: calc(0.2rem + 0.2vw);
+}
+
+/*
+ * Social Buttons for Bootstrap
+ *
+ * Copyright 2013-2016 Panayiotis Lipiridis
+ * Licensed under the MIT License
+ *
+ * https://github.com/lipis/bootstrap-social
+ */
+.btn-social {
+  position: relative;
+  padding-left: 44px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-social > :first-child {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  bottom: 0;
+  width: 32px;
+  line-height: 32px;
+  font-size: 1.6em;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  transform: translate(0, -50%);
+}
+
+.btn-social-icon {
+  position: relative;
+  padding-left: 44px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 34px;
+  width: 34px;
+  padding: 0;
+}
+
+.btn-social-icon > :first-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  line-height: 34px;
+  font-size: 1.6em;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.btn-google {
+  color: #fff;
+  background-color: rgba(66, 134, 244, 0.9333333333);
+  border-color: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in;
+}
+
+.btn-google:focus,
+.btn-google.focus {
+  color: #fff;
+  background-color: #4285f4;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:hover {
+  color: #fff;
+  background-color: #4285f4;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active,
+.btn-google.active,
+.open > .dropdown-toggle.btn-google {
+  color: #fff;
+  background-color: #4285f4;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active:hover,
+.btn-google.active:hover,
+.open > .dropdown-toggle.btn-google:hover,
+.btn-google:active:focus,
+.btn-google.active:focus,
+.open > .dropdown-toggle.btn-google:focus,
+.btn-google:active.focus,
+.btn-google.active.focus,
+.open > .dropdown-toggle.btn-google.focus {
+  color: #fff;
+  background-color: #4286f4;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google:active,
+.btn-google.active,
+.open > .dropdown-toggle.btn-google {
+  background-image: none;
+}
+
+.btn-google.disabled:hover,
+.btn-google[disabled]:hover,
+fieldset[disabled] .btn-google:hover,
+.btn-google.disabled:focus,
+.btn-google[disabled]:focus,
+fieldset[disabled] .btn-google:focus,
+.btn-google.disabled.focus,
+.btn-google[disabled].focus,
+fieldset[disabled] .btn-google.focus {
+  background-color: #4285f4;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-google .badge {
+  color: #4285f4;
+  background-color: #fff;
+}
+
+.blog-link {
+  text-decoration: none;
+  cursor: pointer;
+}
