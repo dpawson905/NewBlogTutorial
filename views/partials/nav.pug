@@ -10,17 +10,17 @@ nav#nav.navbar.navbar-expand-lg.bg-transparent.fixed-top(data-bs-theme="dark")
         button#notificationDropdown.btn.btn-transparent.text-white.dropdown-toggle.no-arrow.me-3.position-relative(type='button' data-bs-toggle='dropdown' aria-expanded='false')
           i.fa-regular.fa-bell
           span.position-absolute.badge.rounded-pill.bg-danger.p-0.m-0#notificationCount(class=`${notifications.length ? 'notification-alert' : ''}`)
-        ul.dropdown-menu.notification-box#notification-box.p-0.m-0.overflow-hidden(aria-labelledby='notificationDropdown')
+        ul.dropdown-menu.notification-box#notification-box.shadow.p-0.m-0.overflow-hidden(aria-labelledby='notificationDropdown')
           if notifications && notifications.length
             each notification in notifications
-              li.d-flex.justify-content-between.align-items-center.border.p-1
-                p.fs-6.me-auto.p-0.m-0 #{notification.message}
+              li.d-flex.justify-content-between.align-items-center.border
+                p.fs-6.me-auto.p-0.m-0.ps-2.pt-2.pb-2 #{notification.message}
                 form.d-inline.ms-auto(action=`/notification/${notification.id}?_method=DELETE`, method="post") 
                   button(type="submit").btn.btn-outline-transparent.color-primary.delete-button 
                     i.fa-solid.fa-xmark.color-primary
           else 
             li.d-flex.justify-content-between.align-items-center.empty-notification
-              p.fs-6.me-auto No new notifications
+              p.fs-6.me-auto.p-0.m-0.ps-2.pt-2.pb-2 No new notifications
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#blogNav' aria-controls='blogNav' aria-expanded='false' aria-label='Toggle navigation')
       span.navbar-toggler-icon
     #blogNav.collapse.navbar-collapse

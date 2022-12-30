@@ -1,0 +1,66 @@
+a.snake-btn {
+  padding: 1.5rem 3rem;
+  letter-spacing: 0.4rem !important;
+  text-transform: uppercase;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-btn);
+
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    background: rgba(255,255,255,0.05);
+    animation: animate 2s linear infinite;
+  }
+
+  & span:nth-child(1) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: .4rem;
+    background: linear-gradient(to right, var(--color-snake-btn-m), var(--color-snake-btn));
+    animation: animate1 2s linear infinite;
+  }
+  
+  & span:nth-child(2) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: .4rem;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-snake-btn-m), var(--color-snake-btn));
+    animation: animate2 2s linear infinite;
+    animation-delay: 1s;
+    opacity: 0;
+  }
+  
+  & span:nth-child(3) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: .4rem;
+    background: linear-gradient(to left, var(--color-snake-btn-m), var(--color-snake-btn));
+    animation: animate3 2s linear infinite;
+  }
+  
+  & span:nth-child(4) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: .4rem;
+    height: 100%;
+    background: linear-gradient(to top, var(--color-snake-btn-m), var(--color-snake-btn));
+    animation: animate4 2s linear infinite;
+    animation-delay: 1s;
+    opacity: 0;
+  }
+}

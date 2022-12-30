@@ -1,6 +1,6 @@
 .toast-message {
   font-size: 2vh;
-  letter-spacing: .3px;
+  letter-spacing: 0.3px;
 }
 
 .navbar-brand {
@@ -21,6 +21,7 @@
 
 .notification-box {
   width: 325px;
+  margin-top: 10px !important;
 }
 
 .notification-alert {
@@ -32,5 +33,28 @@
 
   &:empty {
     display: block !important;
+  }
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease-in;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #198754;
+    transition: all 0.3s ease-in;
+  }
+
+  &:hover::after {
+    width: 100%;
+    left: 0;
   }
 }

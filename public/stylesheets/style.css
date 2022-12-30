@@ -1,9 +1,9 @@
 @keyframes color-change {
   0%, 100% {
-    filter: hue-rotate(0deg) blur(0.1px);
+    filter: hue-rotate(-15deg) blur(0.1px);
   }
   50% {
-    filter: hue-rotate(360deg) blur(0);
+    filter: hue-rotate(15deg) blur(0);
   }
 }
 @keyframes scaleUp {
@@ -17,6 +17,61 @@
     transform: scale(1.1);
   }
 }
+@keyframes animate {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+@keyframes animate1 {
+  to {
+    transform: translateX(100%);
+  }
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes animate2 {
+  to {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+}
+@keyframes animate3 {
+  to {
+    transform: translateX(-100%);
+  }
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes animate4 {
+  to {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+  from {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+}
+html.transition,
+html.transition *,
+html.transition *::before,
+html.transition *::after {
+  transition: all 0.5s ease-in-out !important;
+  transition-delay: 0 !important;
+}
+
 *,
 *::before,
 *::after {
@@ -46,6 +101,7 @@
 
 .notification-box {
   width: 325px;
+  margin-top: 10px !important;
 }
 
 .notification-alert {
@@ -57,6 +113,27 @@
 }
 .notification-alert:empty {
   display: block !important;
+}
+
+.nav-link {
+  position: relative;
+  transition: all 0.3s ease-in;
+  overflow: hidden;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #198754;
+  transition: all 0.3s ease-in;
+}
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
 }
 
 .header {
@@ -74,7 +151,7 @@
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
-  animation: scaleUp 4s ease-in-out forwards;
+  animation: scaleUp 4s ease-in-out forwards, color-change 4s infinite linear;
 }
 .header__text {
   color: #fff;

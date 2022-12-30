@@ -9,7 +9,6 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const logger = require("morgan");
-const sassMiddleware = require("node-sass-middleware");
 const session = require("express-session");
 const flash = require("connect-flash");
 const toastr = require("express-toastr");
@@ -80,15 +79,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-// app.use(
-//   sassMiddleware({
-//     src: path.join(__dirname, "public"),
-//     dest: path.join(__dirname, "public"),
-//     indentedSyntax: false, // true = .sass and false = .scss
-//     sourceMap: true,
-//     outputStyle: "compressed",
-//   })
-// );
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "node_modules")));
 

@@ -13,7 +13,7 @@
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    animation: scaleUp 4s ease-in-out forwards;
+    animation: scaleUp 4s ease-in-out forwards, color-change 4s infinite linear;
   }
 
   &__text {

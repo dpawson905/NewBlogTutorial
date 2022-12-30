@@ -1,10 +1,10 @@
 @keyframes color-change {
   0%,
   100% {
-    filter: hue-rotate(0deg) blur(.1px);
+    filter: hue-rotate(-15deg) blur(.1px);
   }
   50% {
-    filter: hue-rotate(360deg) blur(0);
+    filter: hue-rotate(15deg) blur(0);
   }
 }
 
@@ -18,4 +18,60 @@
   100% {
     transform: scale(1.1);
   }
+}
+
+@keyframes animate {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+@keyframes animate1 {
+  to {
+    transform: translateX(100%);
+  }
+  from {
+    transform: translateX(-100%);
+  }
+}
+@keyframes animate2 {
+  to {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+  from {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+}
+@keyframes animate3 {
+  to {
+    transform: translateX(-100%);
+  }
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes animate4 {
+  to {
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+  from {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+}
+
+html.transition,
+html.transition *,
+html.transition *::before,
+html.transition *::after {
+  transition: all 0.5s ease-in-out !important;
+  transition-delay: 0 !important;
 }
