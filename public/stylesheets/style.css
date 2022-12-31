@@ -1,9 +1,9 @@
 @keyframes color-change {
   0%, 100% {
-    filter: hue-rotate(-15deg) blur(0.1px);
+    filter: hue-rotate(-5deg);
   }
   50% {
-    filter: hue-rotate(15deg) blur(0);
+    filter: hue-rotate(5deg);
   }
 }
 @keyframes scaleUp {
@@ -161,6 +161,13 @@ html.transition *::after {
   transform: translate(-50%, -50%);
   letter-spacing: calc(0.2rem + 0.2vw);
 }
+.header .scroll-down {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  font-size: calc(2rem + 2vh);
+  color: #198754;
+}
 
 /*
  * Social Buttons for Bootstrap
@@ -285,4 +292,20 @@ fieldset[disabled] .btn-google.focus {
 .blog-link {
   text-decoration: none;
   cursor: pointer;
+}
+
+.zoom {
+  overflow: hidden !important;
+  height: 300px;
+  max-width: 100%;
+}
+.zoom img {
+  transition: all 1s ease-in-out;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.zoom:hover img {
+  transform: scale(1.1);
 }

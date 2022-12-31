@@ -1,4 +1,23 @@
 .blog-link {
   text-decoration: none;
   cursor: pointer;
+ 
+}
+
+.zoom {
+  overflow: hidden !important;
+  height: 300px;
+  max-width: 100%;
+
+  & img{
+    transition: all 1s ease-in-out;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
+  }
 }

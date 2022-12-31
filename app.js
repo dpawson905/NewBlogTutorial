@@ -34,11 +34,11 @@ const {
   imgSrcUrls,
 } = require("./utils/helmetHelper");
 
-// const seed = require("./seed");
-// seed
-//   .seedSubscribers()
-//   .then(() => seed.seedBlog())
-//   .then(() => seed.seedNotifications());
+const seed = require("./seed");
+seed
+  .seedSubscribers()
+  .then(() => seed.seedBlog())
+  .then(() => seed.seedNotifications());
 
 const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);

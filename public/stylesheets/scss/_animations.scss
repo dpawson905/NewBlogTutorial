@@ -1,10 +1,10 @@
 @keyframes color-change {
   0%,
   100% {
-    filter: hue-rotate(-15deg) blur(.1px);
+    filter: hue-rotate(-5deg);
   }
   50% {
-    filter: hue-rotate(15deg) blur(0);
+    filter: hue-rotate(5deg);
   }
 }
 

@@ -24,4 +24,12 @@
     transform: translate(-50%, -50%);
     letter-spacing: calc(.2rem + .2vw);
   }
+
+  .scroll-down {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    font-size: calc(2rem + 2vh);
+    color: #198754;
+  }
 }
